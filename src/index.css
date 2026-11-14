@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------
+   GLAMOUR POOLS & SPAS — DUAL DESIGN SYSTEM
+   data-theme="sky"      → Option A · Sky Blue & Cloud White
+   data-theme="sapphire" → Option B · Sapphire & Ocean Blue
+---------------------------------------------- */
+
+:root,
+[data-theme="sky"] {
+  --c-base: #f8fcff;
+  --c-alt: #eaf6fc;
+  --c-surface: #ffffff;
+  --c-ink: #172d40;
+  --c-soft: rgba(23, 45, 64, 0.7);
+  --c-faint: rgba(23, 45, 64, 0.46);
+  --c-accent: #176b91;
+  --c-accent2: #8ccff0;
+  --c-glow: #8ccff0;
+  --c-onaccent: #ffffff;
+  --c-deep: #0d3a54;
+  --c-line: rgba(23, 107, 145, 0.16);
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-strong: rgba(255, 255, 255, 0.92);
+  --card-shadow: 0 24px 60px -24px rgba(23, 107, 145, 0.28);
+  --hero-tint: linear-gradient(160deg, rgba(140, 207, 240, 0.22), rgba(23, 107, 145, 0.05) 55%);
+}
+
+[data-theme="sapphire"] {
+  --c-base: #071c35;
+  --c-alt: #0a2547;
+  --c-surface: #0c2a4e;
+  --c-ink: #f2f9ff;
+  --c-soft: rgba(219, 238, 252, 0.74);
+  --c-faint: rgba(219, 238, 252, 0.46);
+  --c-accent: #54d8e8;
+  --c-accent2: #075b83;
+  --c-glow: #54d8e8;
+  --c-onaccent: #05263c;
+  --c-deep: #04101f;
+  --c-line: rgba(84, 216, 232, 0.18);
+  --glass: rgba(7, 28, 53, 0.72);
+  --glass-strong: rgba(7, 28, 53, 0.92);
+  --card-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+  --hero-tint: linear-gradient(160deg, rgba(18, 63, 120, 0.35), rgba(84, 216, 232, 0.06) 55%);
+}
+
+@theme inline {
+  --color-base: var(--c-base);
+  --color-alt: var(--c-alt);
+  --color-surface: var(--c-surface);
+  --color-ink: var(--c-ink);
+  --color-soft: var(--c-soft);
+  --color-faint: var(--c-faint);
+  --color-accent: var(--c-accent);
+  --color-accent2: var(--c-accent2);
+  --color-glow: var(--c-glow);
+  --color-onaccent: var(--c-onaccent);
+  --color-deep: var(--c-deep);
+  --color-line: var(--c-line);
+  --color-glass: var(--glass);
+  --color-glassstrong: var(--glass-strong);
+
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-kenburns: kenburns 26s ease-in-out infinite alternate;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-scroll-cue: scrollCue 2.2s ease-in-out infinite;
+  --animate-shimmer: shimmer 3.2s linear infinite;
+  --animate-pop-in: popIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-up: heroUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-check-pop: checkPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes kenburns {
+  from { transform: scale(1) translateY(0); }
+  to { transform: scale(1.12) translateY(-1.5%); }
+}
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -16px, 0); }
+}
+@keyframes scrollCue {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.45; }
+}
+@keyframes shimmer {
+  from { background-position: -200% 50%; }
+  to { background-position: 200% 50%; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(38px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes checkPop {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--c-base);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth cross-fade while the design direction switches */
+.theme-anim,
+.theme-anim *,
+.theme-anim *::before,
+.theme-anim *::after {
+  transition:
+    background-color 0.7s ease,
+    border-color 0.7s ease,
+    color 0.45s ease,
+    fill 0.6s ease,
+    stroke 0.6s ease !important;
+}
+
+::selection {
+  background: var(--c-accent);
+  color: var(--c-onaccent);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-base);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c-accent) 55%, transparent);
+  border-radius: 8px;
+  border: 2px solid var(--c-base);
+}
+
+/* Scroll-triggered reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-left { transform: translateX(-44px); }
+.reveal-right { transform: translateX(44px); }
+.reveal-zoom { transform: scale(0.94) translateY(14px); }
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Film-grain texture for cinematic photo sections */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Shimmering water line */
+.water-line {
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    var(--c-glow) 50%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
